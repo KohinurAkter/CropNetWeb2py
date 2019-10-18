@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <!-- www.phpied.com/conditional-comments-block-downloads/ -->
+    <!-- Always force latest IE rendering engine
+         (even in intranet) & Chrome Frame
+         Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge{{=not request.is_local and ',chrome=1' or ''}}">
+    <!--  Mobile Viewport Fix
+          j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+          device-width: Occupy full width of the screen in its current orientation
+          initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+          user-scalable = yes allows the user to zoom in -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WSN for Precision Agriculture</title>
+    <!-- http://dev.w3.org/html5/markup/meta.name.html -->
+    <meta name="application-name" content="{{=request.application}}">
+    <!-- Speaking of Google, don't forget to set your site up:
+         http://google.com/webmasters -->
+    <meta name="google-site-verification" content="">
+
+    <!-- custom CSS Started -->
+
+  <link href="{{=URL('static','css/bootstrap.min.css')}}" rel="stylesheet">
+    <!--<link rel="stylesheet" href="{{=URL('static','css/web2py-bootstrap3.css')}}"/> -->
+    <link href="{{=URL('static','font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="{{=URL('static','css/plugins/dataTables/dataTables.bootstrap.css')}}" rel="stylesheet">
+    <link href="{{=URL('static','css/plugins/dataTables/dataTables.responsive.css')}}" rel="stylesheet">
+
+    <link href="{{=URL('static','css/animate.css')}}" rel="stylesheet">
+    <link href="{{=URL('static','css/style.css')}}" rel="stylesheet">
+
+    
+
+
+
+    <!-- Custom CSS End -->
+
+    <!-- include stylesheets -->
+    
+    <link rel="shortcut icon" href="{{=URL('static','images/favicon.ico')}}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{=URL('static','images/favicon.png')}}">
+    <!-- All JavaScript at the bottom, except for Modernizr which enables
+         HTML5 elements & feature detects -->
+    <script src="{{=URL('static','js/modernizr-2.8.3.min.js')}}"></script>
+    <!--[if lt IE 9]>
+        <script src="{{=URL('static','js/respond-1.4.2.min.js')}}"></script>
+        <![endif]-->
+    <!-- Favicons -->
+    {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
+    {{block head}}{{end}}
+    {{
+    # using sidebars need to know what sidebar you want to use
+    mc0 = 'col-md-12'
+    mc1 = 'col-md-9'
+    mc2 = 'col-md-6'
+    left_sidebar_enabled = globals().get('left_sidebar_enabled', False)
+    right_sidebar_enabled = globals().get('right_sidebar_enabled', False)
+    middle_column = {0: mc0, 1: mc1, 2: mc2}[
+    (left_sidebar_enabled and 1 or 0)+(right_sidebar_enabled and 1 or 0)]
+    }}
+  </head>
+  <body>
+    <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+   <!-- <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div> -->
+    
+
+
+
+
+<div id="wrapper">
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <h2>Project on Irrigation Precision System Based on IoT </h2>
+                             </span> </span> </a>
+                        </div>
+                        <div class="logo-element">
+                            CropNet
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{{=URL('/all_devices')}}"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span></a>
+                    </li>
+                    <!--
+                    <li>
+                        <a href="{{=URL('/units')}}"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Units</span></a>
+                    </li>
+                    -->
+                    <li>
+                        <a href="#"><i class="fa fa-connectdevelop"></i> <span class="nav-label">Node</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="{{=URL('default','add_node')}}">Add Node</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{=URL('default','data_set')}}"><i class="fa fa-flask"></i> <span class="nav-label">Data Collections</span> </a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Analytical Graph</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="{{=URL('plot','index?plot=100&state=temperature')}}">Soil Temperature</a></li>
+                            <li><a href="{{=URL('plot','index?plot=100&state=humidity')}}">Relative Humidity</a></li>
+                            <li><a href="{{=URL('plot','index?plot=100&state=mosture')}}">Soil Moisture</a></li>
+                            <li><a href="{{=URL('plot','index?plot=100&state=ambient')}}">Ambient Temperature</a></li>
+                            <li><a href="{{=URL('plot','single_node?node=700')}}">Node 700</a></li>
+                            <li><a href="{{=URL('plot','single_node?node=800')}}">Node 800</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+                <div class="form-group">
+                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                </div>
+            </form>
+        </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <span class="m-r-sm text-muted welcome-message">Welcome to Design and development of Wireless Sensor Network for Precision Agriculture.</span>
+                </li>
+                
+                
+                <li>
+                    <a href="{{=URL('/user/logout')}}">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+        </div>
+
+
+        {{block center}}
+        {{include}}
+        {{end}}
+
+
+
+
+
+
+
+
+        <div class="footer">
+            <div class="pull-right">
+                <strong>University of Chittagong</strong>
+            </div>
+            <div>
+                <strong>Copyright</strong> Wireless Sensor Network for Precision Agriculture &copy; 2016-2017
+            </div>
+        </div>
+
+        </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<!--     <script src="{{=URL('static','js/jquery-2.1.1.js')}}"></script> -->
+    <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
+
+
+    <!--Web2py js starts -->
+    <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
+    {{block page_js}}{{end page_js}}
+    {{if response.google_analytics_id:}}
+    <!-- Analytics ==================================== -->
+    <script src="{{=URL('static','js/analytics.min.js')}}"></script>
+    <script type="text/javascript">
+      analytics.initialize({
+      'Google Analytics':{trackingId:'{{=response.google_analytics_id}}'}
+      });
+    </script>
+    {{pass}}
+    <script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script>
+    <!-- Web2Py js ends -->
+
+    <script src="{{=URL('static','js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
+    <script src="{{=URL('static','js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
+    <script src="{{=URL('static','js/plugins/jeditable/jquery.jeditable.js')}}"></script>
+
+    <!-- Data Tables -->
+    <script src="{{=URL('static','js/plugins/dataTables/jquery.dataTables.js')}}"></script>
+    <script src="{{=URL('static','js/plugins/dataTables/dataTables.bootstrap.js')}}"></script>
+    <script src="{{=URL('static','js/plugins/dataTables/dataTables.responsive.js')}}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="{{=URL('static','js/inspinia.js')}}"></script>
+    <script src="{{=URL('static','js/plugins/pace/pace.min.js')}}"></script>
+
+    <!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function() {
+            $('.dataTables-example').dataTable({
+                responsive: true
+            });
+
+            /* Init DataTables */
+            var oTable = $('#editable').dataTable();
+
+            /* Apply the jEditable handlers to the table */
+            oTable.$('td').editable( '../example_ajax.php', {
+                "callback": function( sValue, y ) {
+                    var aPos = oTable.fnGetPosition( this );
+                    oTable.fnUpdate( sValue, aPos[0], aPos[1] );
+                },
+                "submitdata": function ( value, settings ) {
+                    return {
+                        "row_id": this.parentNode.getAttribute('id'),
+                        "column": oTable.fnGetPosition( this )[2]
+                    };
+                },
+
+                "width": "90%",
+                "height": "100%"
+            } );
+
+
+        });
+
+        function fnClickAddRow() {
+            $('#editable').dataTable().fnAddData( [
+                "Custom row",
+                "New row",
+                "New row",
+                "New row",
+                "New row" ] );
+
+        }
+    </script>
+  </body>
+</html>

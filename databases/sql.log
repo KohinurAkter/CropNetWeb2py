@@ -1,0 +1,316 @@
+timestamp: 2017-06-20T02:18:47.030000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2017-06-20T02:18:48.002000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2017-06-20T02:18:48.138000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2017-06-20T02:18:48.269000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2017-06-20T02:18:48.385000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2017-06-20T02:18:48.517000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2017-06-17T02:16:09.142000
+ALTER TABLE auth_user ADD username CHAR(128);
+success!
+timestamp: 2017-06-17T02:29:09.785000
+CREATE TABLE Units(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    unit_id CHAR(512),
+    unit_name CHAR(512),
+    device_location CHAR(512)
+);
+success!
+timestamp: 2017-06-17T02:30:09.794000
+CREATE TABLE Node(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    node_id CHAR(512),
+    node_name CHAR(512),
+    node_location CHAR(512)
+);
+success!
+timestamp: 2017-06-17T02:33:09.801000
+CREATE TABLE Auth_Node(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    auth_Ref_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    node_ref_id INTEGER REFERENCES Node (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2017-06-17T02:40:09.808000
+CREATE TABLE Collected_Data(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    node_ref_id INTEGER REFERENCES Node (id) ON DELETE CASCADE  ,
+    temperature DOUBLE,
+    humidity INTEGER,
+    mosture CHAR(512),
+    light DOUBLE,
+    co2gas DOUBLE,
+    ping_time TIMESTAMP
+);
+success!
+timestamp: 2017-06-23T09:31:36.896489
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    username VARCHAR(128),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-23T09:31:36.952328
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-23T09:31:37.004104
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-23T09:31:37.066974
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-23T09:31:37.125589
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-23T09:31:37.185330
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-23T09:31:37.235885
+CREATE TABLE Node(
+    id INT AUTO_INCREMENT NOT NULL,
+    node_id VARCHAR(512),
+    node_name VARCHAR(512),
+    node_location VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-23T09:31:37.293805
+CREATE TABLE Auth_Node(
+    id INT AUTO_INCREMENT NOT NULL,
+    auth_Ref_id INT  , INDEX auth_Ref_id__idx (auth_Ref_id), FOREIGN KEY (auth_Ref_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    node_ref_id INT  , INDEX node_ref_id__idx (node_ref_id), FOREIGN KEY (node_ref_id) REFERENCES Node (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-23T09:31:37.347264
+CREATE TABLE Collected_Data(
+    id INT AUTO_INCREMENT NOT NULL,
+    node_ref_id INT  , INDEX node_ref_id__idx (node_ref_id), FOREIGN KEY (node_ref_id) REFERENCES Node (id) ON DELETE CASCADE,
+    temperature DOUBLE,
+    humidity INT,
+    mosture VARCHAR(512),
+    light DOUBLE,
+    co2gas DOUBLE,
+    ping_time DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+success!
+timestamp: 2018-01-19T14:37:06.486840
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    username VARCHAR(128),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-19T14:37:06.536351
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-19T14:37:06.583752
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-19T14:37:06.652001
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-19T14:37:06.705943
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-19T14:37:06.774186
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-19T14:37:06.824594
+CREATE TABLE Node(
+    id INT AUTO_INCREMENT NOT NULL,
+    node_id VARCHAR(512),
+    node_name VARCHAR(512),
+    node_location VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-19T14:37:06.873529
+CREATE TABLE Auth_Node(
+    id INT AUTO_INCREMENT NOT NULL,
+    auth_Ref_id INT  , INDEX auth_Ref_id__idx (auth_Ref_id), FOREIGN KEY (auth_Ref_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    node_ref_id INT  , INDEX node_ref_id__idx (node_ref_id), FOREIGN KEY (node_ref_id) REFERENCES Node (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-19T14:37:06.932123
+CREATE TABLE Collected_Data(
+    id INT AUTO_INCREMENT NOT NULL,
+    node_ref_id INT  , INDEX node_ref_id__idx (node_ref_id), FOREIGN KEY (node_ref_id) REFERENCES Node (id) ON DELETE CASCADE,
+    temperature DOUBLE,
+    humidity DOUBLE,
+    mosture DOUBLE,
+    light DOUBLE,
+    co2gas DOUBLE,
+    ping_time DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-24T19:35:15.044572
+CREATE TABLE suggestion(
+    id INT AUTO_INCREMENT NOT NULL,
+    Name VARCHAR(512),
+    Description VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-25T10:29:29.824940
+CREATE TABLE motor_state(
+    id INT AUTO_INCREMENT NOT NULL,
+    state VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-01-25T10:34:29.772105
+ALTER TABLE motor_state ADD cstate VARCHAR(512);
+success!
+success!
+timestamp: 2018-01-29T17:47:49.690657
+CREATE TABLE chat(
+    id INT AUTO_INCREMENT NOT NULL,
+    topic_ref_id INT  , INDEX topic_ref_id__idx (topic_ref_id), FOREIGN KEY (topic_ref_id) REFERENCES suggestion (id) ON DELETE CASCADE,
+    Name VARCHAR(512),
+    Comment VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2018-03-25T17:40:31.132737
+ALTER TABLE Collected_Data DROP COLUMN light;
+success!
+timestamp: 2018-03-25T17:40:31.411595
+ALTER TABLE Collected_Data DROP COLUMN co2gas;
+success!
+timestamp: 2018-03-25T17:42:31.085137
+ALTER TABLE Collected_Data ADD ambient DOUBLE;
+success!
+success!

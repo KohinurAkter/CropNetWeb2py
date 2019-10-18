@@ -1,0 +1,58 @@
+(dp1
+S'node_ref_id'
+p2
+(dp3
+S'length'
+p4
+I512
+sS'unique'
+p5
+I00
+sS'sortable'
+p6
+I3
+sS'sql'
+p7
+S'INT  , INDEX node_ref_id__idx (node_ref_id), FOREIGN KEY (node_ref_id) REFERENCES Node (id) ON DELETE CASCADE'
+p8
+sS'notnull'
+p9
+I00
+sS'type'
+p10
+S'reference Node'
+p11
+ssS'id'
+p12
+(dp13
+g4
+I512
+sg5
+I00
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p14
+sg9
+I00
+sg10
+g12
+ssS'auth_Ref_id'
+p15
+(dp16
+g4
+I512
+sg5
+I00
+sg6
+I2
+sg7
+S'INT  , INDEX auth_Ref_id__idx (auth_Ref_id), FOREIGN KEY (auth_Ref_id) REFERENCES auth_user (id) ON DELETE CASCADE'
+p17
+sg9
+I00
+sg10
+S'reference auth_user'
+p18
+ss.

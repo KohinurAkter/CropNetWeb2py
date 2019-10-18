@@ -1,0 +1,4 @@
+{{if request.post.vars:
+       got = request.post.vars}}
+{{=got}}
+{{pass}}

@@ -1,0 +1,40 @@
+<!Doctype html>
+<html>
+<head>
+    <title> Open A Topic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    #suggestion_Description{
+        height: 150px;
+    }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+           <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+               <h2 class="text-center">
+                   Open A Topic
+               </h2>
+               <br>
+               {{=opentopic}}
+               <br>
+               <h2 style="color: skyblue;">
+                   Previous Topics
+               </h2>
+               <div class="list-group">
+                   {{for t in pt:
+                         name=t[0]
+                         to=t[1]
+                         id=t[2]
+                   }}
+                  <a href="{{=URL('chat',args=id)}}" class="list-group-item"><b>{{=name}}</b><br>{{=to}}</a>
+                   {{pass}}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

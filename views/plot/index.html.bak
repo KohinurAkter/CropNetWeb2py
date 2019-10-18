@@ -1,0 +1,142 @@
+{{extend 'layout_table.html'}}
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+//       google.charts.load('current', {'packages':['line']});
+//       google.charts.setOnLoadCallback(drawChart);
+
+//     function drawChart() {
+
+//       var data = new google.visualization.DataTable();
+//       data.addColumn('datetime', 'Time');
+//       data.addColumn('number', 'Node 1 Data');
+//       data.addColumn('number','Node 2 Data');
+
+//       data.addRows({{=plot}});
+
+//       var options = {
+//         chart: {
+//           title: 'Real Time Sensor Data Analysis',
+//           subtitle: 'Time vs {{=title}}'
+//         },
+//         width: 1000,
+//         height: 500,
+//         axes: {
+//           x: {
+//             0: {side: 'bottom'}
+//           }
+//         }
+//       };
+
+//       var chart = new google.charts.Line(document.getElementById('line_top_x'));
+
+//       chart.draw(data, google.charts.Line.convertOptions(options));
+//     }
+        
+        
+    google.charts.load('current', {'packages':['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Node 1 Data');
+      data.addColumn('number','Node 2 Data');
+
+      data.addRows({{=plot}});
+
+      var linearOptions = {
+        title: 'Real Time Sensor Data Analysis',
+        legend: 'none',
+        width: 1000,
+        height: 500,
+        hAxis: {
+          title: 'Date'
+        },
+        vAxis: {
+          title: '{{=title}} amount',
+          ticks: {{=r}}
+        }
+      };
+
+      var logOptions = {
+        title: 'Real Time Sensor Data Analysis',
+        legend: 'none',
+        width: 1000,
+        height: 500,
+         hAxis: {
+          title: 'Date'
+        },
+        vAxis: {
+          title: '{{=title}} amount',
+          scaleType: 'log',
+          ticks: {{=r}}
+        }
+      };
+
+//       var linearChart = new google.visualization.LineChart(document.getElementById('line_top_x'));
+//        linearChart.draw(data, linearOptions);
+
+      var logChart = new google.visualization.LineChart(document.getElementById('line_top_x'));
+      logChart.draw(data, logOptions);
+    }
+  </script>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>Analytical Node Data</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="">Home</a>
+                        </li>
+                        <li class="active">
+                            <strong>Graph</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Analytical Node Data</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Home</a>
+                                </li>
+                                <li><a href="#">Change Graph</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" style="height: 700px;">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            {{if len(has_data)>1:}}
+                            <div id="line_top_x"></div>
+                            {{else:}}
+                            <h2>
+                                No Sensor Data Received Yet
+                            </h2>
+                            {{pass}}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>

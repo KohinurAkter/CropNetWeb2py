@@ -1,0 +1,156 @@
+{{extend 'layout_table.html'}}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    google.charts.load('current', {'packages':['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawChart);
+    var all_data = {{=plot}}
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Temperature');
+      data.addColumn('number','Humidity');
+      data.addColumn('number', 'Moisture');
+      data.addColumn('number','Ambient Tempareture');
+
+      data.addRows(all_data);
+
+      var linearOptions = {
+        title: 'Real Time Sensor Data Analysis',
+        legend: 'none',
+        width: 1000,
+        height: 500,
+        hAxis: {
+          title: 'Date'
+        },
+        vAxis: {
+          title: '{{=title}} amount',
+          ticks: {{=r}}
+        }
+      };
+
+      var logOptions = {
+        title: 'Real Time Sensor Data Analysis',
+        legend: 'none',
+        width: 1000,
+        height: 500,
+         hAxis: {
+          title: 'Date'
+        },
+        vAxis: {
+          title: '{{=title}} amount',
+          scaleType: 'log',
+          ticks: {{=r}}
+        }
+      };
+
+      var linearChart = new google.visualization.LineChart(document.getElementById('line_top_x'));
+       linearChart.draw(data, linearOptions);
+
+    }
+  </script>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>Analytical Node Data</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="">Home</a>
+                        </li>
+                        <li class="active">
+                            <strong>Graph</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+
+
+<div class="container">
+	<div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <br>
+        	<form action="{{=URL('plot','form_data')}}" id="form" name="form" class="form-inline">
+    		<div class="form-group">
+    			<label>From</label>
+    		    <input type="text" id="datepicker" name="start" class="form-control" placeholder="Click to choose start date">
+    		</div>
+    		<div class="form-group">
+    			<label>To</label>
+    		    <input type="text" id="datepicker1" name="end" class="form-control" placeholder="Click to choose end date">
+                <input name="node_id" value="{{=node_name}}" type="hidden">
+    		</div>
+                <button type="submit" name="submit" class="btn btn-primary">Update</button>
+    	</form>
+        </div>
+	</div>
+</div>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+//     var $=jQuery.noConflict();
+    $(function() {
+        $( "#datepicker" ).datepicker({
+            dateFormat : 'yy-mm-dd',
+            changeMonth : true,
+            changeYear : true,
+            yearRange: '-100y:c+nn',
+            maxDate: '-1d'
+        });
+        $( "#datepicker1" ).datepicker({
+            dateFormat : 'yy-mm-dd',
+            changeMonth : true,
+            changeYear : true,
+            yearRange: '-100y:c+nn',
+            maxDate: '-1d'
+        });
+    });
+</script>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Analytical Node Data</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Home</a>
+                                </li>
+                                <li><a href="#">Change Graph</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" style="height: 700px;">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            {{if len(has_data)>1:}}
+                            <div id="line_top_x"></div>
+                            {{else:}}
+                            <h2>
+                                No Sensor Data Received Yet
+                            </h2>
+                            {{pass}}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>

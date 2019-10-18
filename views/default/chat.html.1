@@ -1,0 +1,53 @@
+<!Doctype html>
+<html>
+<head>
+    <title> Open A Topic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    #chat_topic_ref_id__row{
+        display: none;
+    }
+    </style>
+    
+    </head>
+    <body>
+        <div class="container">
+           <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+               <h2 class="text-center">
+                   Problem Disscussion
+               </h2>
+               <div class="panel panel-default">
+                      <div class="panel-heading">{{=topic}} <br><small> Posted By: {{=pby}}</small></div>
+                      <div class="panel-body">
+                          <ul class="list-group">
+                           {{
+                                  for t in chat:
+                                     name=t[0]
+                                     com=t[1]
+                           }}
+                   <li class="list-group-item"><b>{{=name}}</b><br>{{=com}}</li>
+                   {{pass}}
+                </ul>
+                      </div>
+
+                   
+                  
+                </div>
+               <h2>
+                       Give Your Suggestion Please.
+                   </h2>
+                {{=chat1}}
+            </div>
+        </div>
+        <script>
+        document.getElementById("chat_topic_ref_id").value = {{=pid}};
+        $(function() {
+        $('#submit_record__row').attr('action', '');
+    });
+    </script>
+    </body>
+</html>
